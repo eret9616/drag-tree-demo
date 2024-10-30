@@ -23,6 +23,7 @@ export default {
         { label: "方块", type: "square" }, // 新增方块元素
         { label: "圆形", type: "circle" }, // 新增圆形元素
         // 可以继续添加更多元素
+        { label: "Flex 容器", type: "flex-container" },
       ],
     };
   },

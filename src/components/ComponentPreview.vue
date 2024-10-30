@@ -1,22 +1,23 @@
 <template>
-  <div>
-    <component
-      v-for="item in treeData"
-      :is="getComponentName(item.type)"
-      :key="item.id"
-      v-bind="getComponentProps(item)"
-    >
-      <!-- 如果有子元素，递归渲染 -->
+  <component
+    :is="getComponentName(treeData.type)"
+    :key="treeData.id"
+    :style="getComputedStyle(treeData)"
+    v-bind="getComponentProps(treeData)"
+  >
+    <!-- 如果有子元素，递归渲染 -->
+    <template v-if="treeData.children && treeData.children.length">
       <component-preview
-        v-if="item.children && item.children.length"
-        :tree-data="item.children"
+        v-for="child in treeData.children"
+        :key="child.id"
+        :tree-data="child"
       />
-      <!-- 如果是文本类型，显示文本内容 -->
-      <span v-else-if="item.type === 'text'">{{
-        item.content || "示例文本"
-      }}</span>
-    </component>
-  </div>
+    </template>
+    <!-- 如果是文本类型，显示文本内容 -->
+    <span v-else-if="treeData.type === 'text'">
+      {{ treeData.content || "示例文本" }}
+    </span>
+  </component>
 </template>
 
 <script>
@@ -24,7 +25,7 @@ export default {
   name: "ComponentPreview",
   props: {
     treeData: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
@@ -37,42 +38,48 @@ export default {
           return "img";
         case "square":
         case "circle":
-          return "div"; // 方块和圆形都使用 div
-        // 根据需要添加更多类型
+        case "flex-container":
+          return "div";
         default:
           return "div";
       }
     },
     getComponentProps(item) {
       let props = {};
+      if (item.type === "image") {
+        props.src = item.src || "https://via.placeholder.com/150";
+        props.alt = item.alt || "示例图片";
+      }
+      return props;
+    },
+    getComputedStyle(item) {
+      let style = { ...item.style };
+
       switch (item.type) {
-        case "image":
-          props.src = item.src || "https://via.placeholder.com/150";
-          props.alt = item.alt || "示例图片";
-          props.style = "max-width: 100%;";
-          break;
         case "square":
-          props.style = `
-              width: 100px;
-              height: 100px;
-              background-color: red;
-              margin: 10px;
-            `;
+          style.width = style.width || "100px";
+          style.height = style.height || "100px";
+          style["background-color"] = style["background-color"] || "red";
+          style.margin = style.margin || "10px";
           break;
         case "circle":
-          props.style = `
-              width: 100px;
-              height: 100px;
-              background-color: blue;
-              border-radius: 50%;
-              margin: 10px;
-            `;
+          style.width = style.width || "100px";
+          style.height = style.height || "100px";
+          style["background-color"] = style["background-color"] || "blue";
+          style["border-radius"] = "50%";
+          style.margin = style.margin || "10px";
           break;
-        // 根据需要添加更多类型
+        case "flex-container":
+          style.display = "flex";
+          style["flex-direction"] = style["flex-direction"] || "row";
+          style["justify-content"] = style["justify-content"] || "flex-start";
+          style["align-items"] = style["align-items"] || "flex-start";
+          break;
         default:
           break;
       }
-      return props;
+
+      return style;
     },
   },
 };

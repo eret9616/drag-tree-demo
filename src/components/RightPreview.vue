@@ -1,9 +1,10 @@
 <template>
-  <div>
-    <h3>预览区</h3>
-    <div class="preview-area">
-      <component-preview :tree-data="treeData" />
-    </div>
+  <div class="preview-area">
+    <component-preview
+      v-for="item in treeData"
+      :key="item.id"
+      :tree-data="item"
+    />
   </div>
 </template>
 
@@ -11,22 +12,21 @@
 import ComponentPreview from "./ComponentPreview.vue";
 
 export default {
+  name: "RightPreview",
+  components: {
+    ComponentPreview,
+  },
   props: {
     treeData: {
       type: Array,
       required: true,
     },
   },
-  components: {
-    ComponentPreview,
-  },
 };
 </script>
 
 <style>
 .preview-area {
-  border: 1px solid #ebeef5;
   padding: 20px;
-  min-height: 400px;
 }
 </style>
