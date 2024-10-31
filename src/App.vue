@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     addCustomComponent(component) {
+      debugger;
       // 将自定义组件添加到编辑区
       const componentCopy = JSON.parse(JSON.stringify(component));
 

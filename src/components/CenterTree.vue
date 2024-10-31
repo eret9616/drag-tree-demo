@@ -3,6 +3,7 @@
   <div>
     <h3>元素结构</h3>
     <el-tree
+      :icon-class="'sasd'"
       :data="treeData"
       :props="defaultProps"
       node-key="id"
@@ -15,7 +16,7 @@
       style="border: 1px solid #ebeef5; padding: 10px"
     >
       <span slot-scope="{ node, data }">
-        {{ data.label }}
+        <span v-if="data.type === 'flex-container'">+</span> {{ data.label }}
       </span>
     </el-tree>
   </div>
