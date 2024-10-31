@@ -6,12 +6,14 @@
       :icon-class="'rmDefaultIcon'"
       :data="treeData"
       :props="defaultProps"
+      :show-expand-icon="false"
       node-key="id"
       draggable
       :allow-drop="allowDrop"
       @node-drop="handleNodeDrop"
       @node-click="handleNodeClick"
       default-expand-all
+      :expand-on-click-node="false"
       highlight-current
       style="border: 1px solid #ebeef5; padding: 10px"
     >
