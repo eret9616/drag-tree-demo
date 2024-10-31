@@ -1,8 +1,16 @@
 <template>
   <div class="container">
+    <!-- 顶部工具栏 -->
+    <div class="toolbar">
+      <el-button type="primary" @click="saveComponent">保存当前组件</el-button>
+    </div>
     <!-- 左侧面板 -->
     <div class="panel left-panel">
-      <left-panel @add-element="addElement" />
+      <left-panel
+        :custom-components="customComponents"
+        @add-element="addElement"
+        @add-custom-component="addCustomComponent"
+      />
     </div>
     <!-- 中间面板 -->
     <div class="panel center-panel">
@@ -40,6 +48,7 @@ export default {
   },
   data() {
     return {
+      customComponents: [], // 用于存储用户保存的组件列表
       treeData: [
         {
           id: "root",
@@ -56,6 +65,35 @@ export default {
     };
   },
   methods: {
+    addCustomComponent(component) {
+      // 将自定义组件添加到编辑区
+      const componentCopy = JSON.parse(JSON.stringify(component));
+
+      // 需要确保 id 唯一，重新生成 id
+      componentCopy.id = Date.now();
+
+      // 添加到 treeData 的子节点中
+      this.treeData.children.push(componentCopy);
+    },
+    saveComponent() {
+      this.$prompt("请输入组件名称", "保存组件", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+      })
+        .then(({ value }) => {
+          // 用户输入了组件名称
+          const componentCopy = JSON.parse(JSON.stringify(this.treeData));
+          componentCopy.id = `custom_${Date.now()}`;
+          componentCopy.label =
+            value || `自定义组件 ${this.customComponents.length + 1}`;
+          this.customComponents.push(componentCopy);
+          debugger;
+          this.$message.success("组件已保存到素材库！");
+        })
+        .catch(() => {
+          // 用户取消了输入
+        });
+    },
     addElement(item) {
       const newItem = {
         id: Date.now(),
