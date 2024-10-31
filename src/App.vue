@@ -95,18 +95,23 @@ export default {
         });
     },
     addElement(item) {
+      let _item = item;
+      if (Array.isArray(item)) {
+        _item = item[0];
+      }
+      debugger;
       const newItem = {
         id: Date.now(),
-        label: item.label,
-        type: item.type,
+        label: _item.label,
+        type: _item.type,
         style: {},
-        children: [],
+        children: _item.children ? _item.children : [],
       };
 
       // 如果需要为新元素添加默认属性，可以在这里设置
-      if (item.type === "text") {
+      if (_item.type === "text") {
         newItem.content = "示例文本";
-      } else if (item.type === "image") {
+      } else if (_item.type === "image") {
         newItem.src = "https://via.placeholder.com/150";
         newItem.alt = "示例图片";
       }
