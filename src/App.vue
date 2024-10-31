@@ -96,13 +96,15 @@ export default {
     },
     addElement(item) {
       let _item = item;
+      let _label = _item.label;
       if (Array.isArray(item)) {
         _item = item[0];
+        _label = "自定义组件" + item.label + ": " + _item.label;
       }
       debugger;
       const newItem = {
         id: Date.now(),
-        label: item.label + _item.label,
+        label: _label,
         type: _item.type,
         style: {},
         children: _item.children ? _item.children : [],
