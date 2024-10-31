@@ -102,7 +102,7 @@ export default {
       debugger;
       const newItem = {
         id: Date.now(),
-        label: _item.label,
+        label: item.label + _item.label,
         type: _item.type,
         style: {},
         children: _item.children ? _item.children : [],
