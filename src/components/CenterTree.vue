@@ -3,7 +3,7 @@
   <div>
     <h3>元素结构</h3>
     <el-tree
-      :icon-class="'sasd'"
+      :icon-class="'rmDefaultIcon'"
       :data="treeData"
       :props="defaultProps"
       node-key="id"
