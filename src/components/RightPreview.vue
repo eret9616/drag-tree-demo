@@ -27,6 +27,8 @@ export default {
 
 <style>
 .preview-area {
-  padding: 20px;
+  border: 1px dotted black;
+  width: 392px;
+  height: 871.11px;
 }
 </style>

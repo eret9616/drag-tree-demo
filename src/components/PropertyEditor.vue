@@ -1,6 +1,9 @@
 <template>
   <div v-if="localSelectedItem">
     <h3>属性编辑</h3>
+    <el-button @click="deleteComponent" style="margin: 5px 0" type="">
+      删除组件
+    </el-button>
     <el-form label-position="top">
       <!-- 子元素的 Flex 属性 -->
       <el-form-item v-if="isChildOfFlexContainer" label="Flex 占比 (flex)">
@@ -20,6 +23,16 @@
           <el-option label="居中" value="center"></el-option>
           <el-option label="结束" value="flex-end"></el-option>
           <el-option label="拉伸" value="stretch"></el-option>
+        </el-select>
+      </el-form-item>
+      <!-- Flex 属性设置 -->
+      <el-form-item v-if="isFlexContainer" label="Flex换行">
+        <el-select
+          v-model="localSelectedItem.style['flex-wrap']"
+          @change="onStyleChange"
+        >
+          <el-option label="换行" value="wrap"></el-option>
+          <el-option label="不换行" value="nowrap"></el-option>
         </el-select>
       </el-form-item>
       <!-- Flex 属性设置 -->
@@ -128,6 +141,9 @@ export default {
     },
   },
   methods: {
+    deleteComponent() {
+      window.alert("删除组件");
+    },
     updateStyle(prop, value) {
       this.$set(this.localSelectedItem.style, prop, value);
       this.$emit("update-item", this.localSelectedItem);
