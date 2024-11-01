@@ -45,11 +45,12 @@ export default {
     // 允许拖拽到 flex-container 类型的节点下
     allowDrop(draggingNode, dropNode, type) {
       if (dropNode.data.type === "flex-container") {
-        return type !== "prev" && type !== "next";
+        // return type !== "prev" && type !== "next";
+        return true;
       } else {
         // 禁止将元素拖拽为根节点
-        // return dropNode.level !== 1;
-        return false;
+        return dropNode.level !== 1;
+        // return false;
       }
     },
     handleNodeDrop(draggingNode, dropNode, dropType, ev) {

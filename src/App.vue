@@ -88,7 +88,11 @@ export default {
           componentCopy.label =
             value || `自定义组件 ${this.customComponents.length + 1}`;
           this.customComponents.push(componentCopy);
-          debugger;
+
+          // 测试
+          window.myElements = window.myElements || [];
+          window.myElements.push(componentCopy);
+
           this.$message.success("组件已保存到素材库！");
         })
         .catch(() => {
