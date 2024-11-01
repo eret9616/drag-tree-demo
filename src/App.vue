@@ -25,6 +25,7 @@
       <right-preview :tree-data="treeData" />
       <!-- 属性编辑器 -->
       <property-editor
+        :tree-data="treeData"
         :selected-item="selectedItem"
         @update-item="updateItem"
       />
@@ -126,6 +127,23 @@ export default {
       this.treeData[0].children.push(newItem);
     },
     selectItem(item) {
+      //   const deleteNodeById = (data, id) => {
+      // debugger;
+      // for (let i = 0; i < data.length; i++) {
+      //   const node = data[i];
+      //   if (node.id === id) {
+      // data.splice(i, 1); // 找到节点，直接删除
+      // return true;
+      //   }
+      //   if (node.children && node.children.length > 0) {
+      // const found = deleteNodeById(node.children, id); // 递归查找
+      // if (found) return true;
+      //   }
+      // }
+      // return false;
+      //   };
+      //
+      //   deleteNodeById(this.treeData, item.id);
       this.selectedItem = item;
     },
     updateItem(updatedItem) {

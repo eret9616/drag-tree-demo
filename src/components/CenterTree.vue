@@ -17,9 +17,9 @@
       highlight-current
       style="border: 1px solid #ebeef5; padding: 10px"
     >
-      <span slot-scope="{ node, data }">
+      <div slot-scope="{ node, data }" class="slot-scope">
         <span v-if="data.type === 'flex-container'">+</span> {{ data.label }}
-      </span>
+      </div>
     </el-tree>
   </div>
 </template>
@@ -68,3 +68,4 @@ export default {
   },
 };
 </script>
+<style lang="less"></style>

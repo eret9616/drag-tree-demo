@@ -111,6 +111,10 @@ export default {
       type: Object,
       default: null,
     },
+    treeData: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -122,6 +126,8 @@ export default {
       handler(newVal) {
         // 创建 selectedItem 的深拷贝
         this.localSelectedItem = JSON.parse(JSON.stringify(newVal));
+        // test
+        window.localSelectedItem = this.localSelectedItem;
       },
       immediate: true,
     },
@@ -143,6 +149,21 @@ export default {
   methods: {
     deleteComponent() {
       window.alert("删除组件");
+      const deleteNodeById = (data, id) => {
+        for (let i = 0; i < data.length; i++) {
+          const node = data[i];
+          if (node.id === id) {
+            data.splice(i, 1); // 找到节点，直接删除
+            return true;
+          }
+          if (node.children && node.children.length > 0) {
+            const found = deleteNodeById(node.children, id); // 递归查找
+            if (found) return true;
+          }
+        }
+        return false;
+      };
+      deleteNodeById(this.treeData, this.localSelectedItem.id);
     },
     updateStyle(prop, value) {
       this.$set(this.localSelectedItem.style, prop, value);
